@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main>
+
+         <article>
+            <header>
+                <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-12 col-sm">
+                        <h2 class="position-relative">Statistiche ascolti PER BRANO</h2>
+                    </div>
+                    <div class="col-12 col-sm text-lg-center">
+                        <h6 class="txt-brand">{{ listaAudio|length }} brani ascoltati</h6>
+                    </div>
+                    <div class="col-12 col-sm text-lg-end">
+                        <a href="{{ path('listaStatisticheUtenti') }}"><i class="fa-light fa-angle-right"></i> Vai alle statistiche per utenti</a>
+                    </div>
+                </div>
+                </div>
+            </header>
+
+            <section id="filters">
+                <div class="card card-body shadow">
+                    <form class="form-inline mb-0" role="search" method="get" action="">
+                        <div class="row align-items-center">
+                            <div class="col-12 col-lg mb-2">
+                                <input type="text" class="form-control textFilter" name="s" placeholder="Cerca..." value="{% if (filtri.s is defined) %}{{ filtri.s }}{% endif %}">
+                            </div>
+                            <div class="col-12 col-lg mb-2">
+                                <select class="form-control chosen ord" name="ord" data-placeholder="Ordina per...">
+                                    <option value="">Ordina per...</option>
+                                    <option {% if (filtri.ord is defined and filtri.ord == 'ascoltiAsc' ) %} selected {% endif %} value="ascoltiAsc">Ascolti --> ASC</option>
+                                    <option {% if (filtri.ord is defined and filtri.ord == 'ascoltiDesc' ) %} selected {% endif %} value="ascoltiDesc">Ascolti --> DESC</option>
+                                    <option {% if (filtri.ord is defined and filtri.ord == 'richiesteAsc' ) %} selected {% endif %} value="richiesteAsc">Richieste --> ASC</option>
+                                    <option {% if (filtri.ord is defined and filtri.ord == 'richiesteDesc' ) %} selected {% endif %} value="richiesteDesc">Richieste --> DESC</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-lg mb-2">
+                                <button type="submit" class="btn btn-sm btn-brand ms-auto">Cerca</button>
+                                {% if (filtri|length > 0) %}
+                                    <a href="{{ path('listaStatisticheAudio') }}" class="ms-2">annulla</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-list mb-5">
+                    <thead>
+                    <tr>
+                        <th class="col-2">Titolo</th>
+                        <th class="col-2">Film/Serie</th>
+                        <th>Durata</th>
+                        <th>Ascolti</th>
+                        <th>Richieste</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in listaAudio %}
+                            <tr>
+                                <td><a href="{{ path('vistaStatisticheAudio', {'id' : item.id}) }}">{{ item.titolo }}</a></td>
+                                <td>
+                                    <span class="badge bg-secondary" data-toggle="tooltip" data-bs-placement="top" title="{% if (item.filmSerie == "F") %}Film{% else %}Serie{% endif %}">{{ item.filmSerie }}</span>
+                                    {{ item.filmSerieNome }}
+                                </td>
+                                <td>{{ item.durata }}</td>
+                                <td>
+                                    <span class="badge bg-secondary">
+                                        {% if (statisticheAudio[item.id] is defined) %}
+                                            {{  statisticheAudio[item.id]|length }}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">
+                                        {% if (statisticheAudioRichieste[item.id] is defined) %}
+                                            {{  statisticheAudioRichieste[item.id]|length }}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    </span>
+                                </td>
+
+                                <td class="text-center">
+                                    <a href="{{ path('vistaStatisticheAudio', {'id' : item.id}) }}" data-toggle="tooltip" title="Statistiche del brano" class="btn btn-brand btn-sm" data-bs-original-title="Statistiche del brano" aria-label="Statistiche del brano"><i class="fa-solid fa-chart-pie"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </article>
+
+    </main>
+
+    {{ include('blocks/modal-delete.html.twig') }}
+
+
+{% endblock %}

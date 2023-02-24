@@ -1,0 +1,31 @@
+{% if app.request.hasPreviousSession %}
+
+    <div style="position: fixed; bottom: 100px; right:30px; z-index: 99999">
+
+        {% for item in app.session.flashBag.get('toastSuccess') %}
+               <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <i class="fas fa-check-square fa-2x"></i>
+                    <strong class="me-auto">&nbsp; {{ item.title | raw }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {{ item.text | raw }}
+                </div>
+            </div>
+        {% endfor %}
+
+        <script>
+            var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+            var toastList = toastElList.map(function (toastEl) {
+                var bsAlert = new bootstrap.Toast(toastEl, {delay: 10000});//inizialize it
+                bsAlert.show();
+                return bsAlert;
+            })
+        </script>
+
+    </div>
+
+{% endif %}
+
+

@@ -1,0 +1,63 @@
+<nav id="topbar" class="navbar navbar-expand-lg bg-dark shadow p-0">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="{{ asset('img/ep-logo.png') }}">
+        </a>
+        {% if app.user.nome is defined %}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item {% if (sidebarActive == "audio") %}active{% endif %}">
+                    <a class="nav-link" aria-current="page" href="/"><i class="fa-solid fa-waveform"></i> Brani</a>
+                </li>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item {% if (sidebarActive == "utenti") %}active{% endif %}">
+                        <a href="{{ path('listaUtenti') }}" class="nav-link"><i class="fas fa-user"></i> Utenti</a>
+                    </li>
+
+                    <li class="nav-item dropdown {% if (sidebarActive == "statisticheAudio" or sidebarActive == "statisticheUtenti") %} active{% endif %}">
+                        <a href="#statisticheSubmenu" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-chart-pie"></i> Statistiche</a>
+                        <ul class="dropdown-menu {% if (sidebarActive == "statisticheAudio" or sidebarActive == "statisticheUtenti") %}show{% endif %}" id="statisticheSubmenu">
+                            <li class="nav-item {% if (sidebarActive == "statisticheAudio") %}active{% endif %}">
+                                <a href="{{ path('listaStatisticheAudio') }}" class="nav-link">Per brano</a>
+                            </li>
+                            <li class="nav-item {% if (sidebarActive == "statisticheUtenti") %}active{% endif %}">
+                                <a href="{{ path('listaStatisticheUtenti') }}" class="nav-link">Per utenti</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown {% if (sidebarActive == "genere" or sidebarActive == "feeling" or sidebarActive == "strumenti") %} active{% endif %}">
+                        <a href="#impostazioniSubmenu" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-cog"></i> Impostazioni</a>
+                        <ul class="dropdown-menu" id="impostazioniSubmenu">
+                            <li class="nav-item {% if (sidebarActive == "genere") %}active{% endif %}">
+                                <a href="{{ path('listaGenere') }}" class="nav-link">Genere</a>
+                            </li>
+                            <li class="nav-item {% if (sidebarActive == "feeling") %}active{% endif %}">
+                                <a href="{{ path('listaFeeling') }}" class="nav-link">Feeling</a>
+                            </li>
+                            <li class="nav-item {% if (sidebarActive == "strumenti") %}active{% endif %}">
+                                <a href="{{ path('listaStrumenti') }}" class="nav-link">Strumenti</a>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('schedaUtenti', {'id' : app.user.id}) }}">
+                        <i class="fa-solid fa-circle-user"></i> {% if is_granted('ROLE_ADMIN') %}(admin) {% endif%}{{ app.user.nome }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</nav>

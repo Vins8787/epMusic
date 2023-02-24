@@ -1,0 +1,43 @@
+{{ include('emails/blocks/header.html.twig') }}
+
+<table bgcolor="#ffffff" width="100%" border="0" cellspacing="0" cellpadding="30" align="center"
+       style="margin: auto"
+       class="tableContent">
+    <tr>
+        <td align="center" style="text-align: center;">
+            <h1>Benvenuto su EPMUSIC</h1>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" style="text-align: center;">
+            <p>
+                Ciao {{ utente.nome }},<br>
+                Ecco i tuoi dati per accedere all'area riservata EPMUSIC!
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" style="text-align: center;">
+            <p>
+                <strong>Username:</strong> {{ utente.userIdentifier }}
+            </p>
+            <p>
+                <strong>Password:</strong> {{ password }}
+            </p>
+            <p>
+                <a href='{{ liveSite }}{{ basePath }}/login' target='_blank'><strong>ACCEDI</strong></a>
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" style="text-align: center;">
+            <p>
+                Grazie,<br>
+                il team di <strong>{{ teamSite }}</strong>
+            </p>
+        </td>
+    </tr>
+
+</table>
+
+{{ include('emails/blocks/footer.html.twig') }}

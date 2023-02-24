@@ -1,0 +1,11 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    globals:
+        basePath: ''
+        liveSite: 'https://epmusic.mister-wolf.it'
+        emailSupporto: 'info@mister-wolf.it'
+        teamSite: 'Eagle Pictures'
+
+when@test:
+    twig:
+        strict_variables: true

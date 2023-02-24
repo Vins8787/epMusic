@@ -1,0 +1,87 @@
+{% if app.request.hasPreviousSession %}
+    <nav class="navbar navbar-expand-lg w-100">
+        <button class="navbar-toggler ps-3" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse" aria-controls="filtersCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i> Filtri
+        </button>
+        <div class="collapse navbar-collapse" id="filtersCollapse">
+            <section id="filters" class="w-100">
+                <div class="card card-body shadow">
+                    <form class="form-inline mb-0" role="search" method="get" action="">
+                        <div class="row align-items-center">
+                            <div class="col-12 col-lg mb-2 mb-lg-0">
+                                <input type="text" class="form-control textFilter" name="s" placeholder="Cerca..." value="{% if (filtri.s is defined) %}{{ filtri.s }}{% endif %}">
+                            </div>
+                            <div class="col-12 col-lg mb-2 mb-lg-0">
+                                <select class="form-control chosen ord" name="genere[]" data-placeholder="Genere..." multiple>
+                                    <option value="">Genere...</option>
+                                    {% for item in listaGenere %}
+                                        <option {% if (filtri.genere is defined and item.id in filtri.genere ) %} selected {% endif %} value="{{ item.id }}">{{ item.nome }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-12 col-lg mb-2 mb-lg-0">
+                                <select class="form-control chosen ord" name="feeling[]" data-placeholder="Feeling..." multiple>
+                                    <option value="">Feeling...</option>
+                                    {% for item in listaFeeling %}
+                                        <option {% if (filtri.feeling is defined and item.id in filtri.feeling ) %} selected {% endif %} value="{{ item.id }}">{{ item.nome }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-12 col-lg mb-2 mb-lg-0">
+                                <select class="form-control chosen ord" name="strumenti[]" data-placeholder="Strumenti..." multiple>
+                                    <option value="">Strumenti...</option>
+                                    {% for item in listaStrumenti %}
+                                        <option {% if (filtri.strumenti is defined and item.id in filtri.strumenti ) %} selected {% endif %} value="{{ item.id }}">{{ item.nome }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-lg mb-2 mb-lg-0">
+                                <select class="form-control chosen ord" name="serieFilm" data-placeholder="Serie/Film...">
+                                    <option value="">Serie/Film...</option>
+                                    {% for item in listaSerieFilm %}
+                                        <option {% if (filtri.serieFilm is defined and item == filtri.serieFilm ) %} selected {% endif %} value="{{ item }}">{{ item }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            {#
+                            <div class="col">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Ascoltati
+                                    </label>
+                                </div>
+                            </div>
+    #}
+
+                            <div class="col-12 col-lg mb-2 mb-lg-0">
+                                <select class="form-control chosen ord" name="stato" data-placeholder="Stato...">
+                                    <option value="">Stato...</option>
+                                        <option {% if (filtri.stato is defined and filtri.stato == 'ascoltati' ) %} selected {% endif %} value="ascoltati">Ascoltati</option>
+                                        <option {% if (filtri.stato is defined and filtri.stato == 'richiesti' ) %} selected {% endif %} value="richiesti">Richiesti</option>
+                                </select>
+                            </div>
+
+
+
+
+                            <div class="col-1 col-lg mb-2 mb-lg-0">
+                                <button type="submit" class="btn btn-sm btn-brand ms-auto">Cerca</button>
+                                {% if (filtri|length > 0) %}
+                                    <a href="{{ path('listaAudio') }}" class="ms-2">annulla</a>
+                                {% endif %}
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+        </section>
+        </div>
+    </nav>
+
+{% endif %}
+
+

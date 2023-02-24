@@ -1,0 +1,730 @@
+// variables
+@import "variables.less";
+@import "mixins.less";
+
+body {
+  height: 100%;
+  color:@gray-base;
+  font-family: @font-family;
+  font-size: @font-size-base-base;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: @white;
+}
+
+#topbar .navbar-toggler {
+  color: @white;
+}
+.navbar-toggler {
+  color: @brand;
+  border: 0 !important;
+}
+
+.nav-pills {
+  .nav-item {
+    .nav-link {
+      color: @brand;
+
+      &.active {
+        color: @white;
+        background-color: @brand;
+      }
+    }
+  }
+}
+
+.txt-genere,
+.txt-feeling {
+  padding-right: .15rem;
+  font-weight: 700;
+}
+.txt-genere {
+  color: @genere;
+}
+.txt-feeling {
+  color: @feeling;
+}
+.bg-genere {
+  background-color: @genere;
+}
+.bg-feeling {
+  background-color: @feeling;
+}
+.txt-brand {
+  color: @brand;
+}
+
+.fa-circle {
+  color: @brand;
+}
+.ascoltato,
+.richiesto {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 999;
+}
+.richiesto {
+  left: 50px;
+}
+
+.table {
+  .ascoltato,
+  .richiesto {
+    position: relative;
+    top: unset;
+    left: unset;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+h6 {
+  font-weight: 700;
+}
+
+.mw-placeholder-img,
+.overlay {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  background-color: @gray-lighter;
+  border: 1px solid @gray-light;
+  height: 250px;
+  transition: background-color 500ms linear;
+  cursor: pointer;
+  h4,
+  i{
+    color: @brand;
+    transition: color 500ms linear;
+  }
+
+  &:hover {
+    background-color: @brand;
+    h4 {
+      color: @white;
+    }
+    i {
+      color: @white;
+      -webkit-animation-name: fa-beat;
+      animation-name: fa-beat;
+      -webkit-animation-delay: var(--fa-animation-delay,0s);
+      animation-delay: var(--fa-animation-delay,0s);
+      -webkit-animation-direction: var(--fa-animation-direction,normal);
+      animation-direction: var(--fa-animation-direction,normal);
+      -webkit-animation-duration: var(--fa-animation-duration,1s);
+      animation-duration: var(--fa-animation-duration,1s);
+      -webkit-animation-iteration-count: var(--fa-animation-iteration-count,infinite);
+      animation-iteration-count: var(--fa-animation-iteration-count,infinite);
+      -webkit-animation-timing-function: var(--fa-animation-timing,ease-in-out);
+      animation-timing-function: var(--fa-animation-timing,ease-in-out);
+    }
+  }
+}
+
+
+
+h2 {
+  small {
+    font-size: 40%;
+  }
+}
+
+// ################################################## REGISTER / LOGIN
+
+.bg-register-image,
+.bg-login-image {
+  background-color: @brand;
+}
+
+.login,
+.recuperaPassword {
+  background-color: @brand;
+  height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+
+  .card {
+    box-shadow: 0 0 15px @gray-dark;
+    border: none !important;
+    background-color: @brand !important;
+  }
+  .white {
+    background-color: @white !important;
+  }
+}
+form.user {
+  .form-control-user {
+    font-size: .8rem;
+    border-radius: .5rem;
+    padding: 1.5rem 1rem;
+  }
+}
+
+// ################################################## NAVBAR
+.navbar .nav-item .dropdown-menu{ display: none; }
+.navbar .nav-item:hover .nav-link{   }
+.navbar .nav-item:hover .dropdown-menu{ display: block; }
+.navbar .nav-item .dropdown-menu{ margin-top:0; }
+
+nav {
+
+  .navbar-brand {
+    img {
+      width: 90%;
+    }
+  }
+  &.bg-dark {
+    background-color: @brand !important;
+  }
+
+  &.navbar {
+    .nav-item {
+      .nav-link {
+        padding: 1rem;
+        display: block;
+        color:@white;
+
+        &:hover,
+        &.show {
+          background-color: @white;
+          color: @brand;
+        }
+      }
+
+      &.active {
+        .nav-link {
+          background-color: @white;
+          color: @brand;
+        }
+        .dropdown-menu {
+          .nav-item {
+            .nav-link {
+              background-color: @brand;
+              color: @white;
+            }
+          }
+        }
+      }
+
+      .dropdown-menu {
+        background-color: @brand;
+
+        .nav-item {
+          .nav-link {
+            &:hover {
+              background-color: @white;
+              color: @brand;
+            }
+          }
+          &.active {
+            .nav-link {
+              background-color: @white;
+              color: @brand;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// ################################################## CONTENT
+#content {
+  padding: 0 0;
+  min-height: 100vh;
+  transition: all 0.3s;
+
+  .navbar {
+    .dropdown.no-arrow .dropdown-toggle::after {
+      display: none;
+    }
+  }
+
+  main {
+    //padding: .75rem;
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+  }
+}
+
+// ################################################## DATE PICKER
+.datepicker-days {
+  table {
+    tr {
+      th,
+      td {
+        padding: .5rem;
+      }
+    }
+  }
+}
+
+// ################################################## FILTERS
+#filters {
+
+  .card {
+    border: 0px;
+    border-radius:0px !important;
+  }
+
+
+  .form-control {
+    font-size: @font-size-small;
+  }
+  .fake-form {
+    font-size: @font-size-small;
+    border-radius: 10rem;
+    padding: 1.2rem 1rem;
+    width: 100%;
+
+    a {
+      //position: absolute;
+      //top: 27%;
+      width: 100%;
+      color: #495057;
+      margin-top: -9px;
+      display: block;
+
+      &.dropdown-toggle {
+        &:after {
+          right: 1.5rem !important;
+        }
+      }
+    }
+    .dropdown-menu {
+      &.show {
+        width: 100%;
+      }
+
+      a {
+        &.dropdown-item {
+          margin-top: 0;
+          padding: .5rem 1rem;
+        }
+      }
+
+    }
+  }
+}
+
+
+// ################################################## DASHBOARD
+.sintesi {
+  h2 {
+    font-size: 2.5rem;
+  }
+  .app {
+    .num {
+      color:@brand;
+    }
+  }
+  .prop {
+    .num {
+      color:@brand;
+    }
+  }
+  .pren {
+    .num {
+      color:@brand;
+    }
+  }
+  .euros {
+    .num {
+      color:#0d74ca;
+    }
+  }
+
+  small {
+    font-size: 40%;
+  }
+}
+.log-item {
+  white-space: normal;
+  border-left: 1px solid #e3e6f0;
+  border-right: 1px solid #e3e6f0;
+  border-bottom: 1px solid #e3e6f0;
+  line-height: 1.3rem;
+  background-color: @white;
+  display: block;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  clear: both;
+  font-weight: 400;
+  color: #3a3b45;
+  text-align: inherit;
+  position: relative;
+
+  &:hover {
+    background-color: @gray-light;
+  }
+
+  &.readed,
+  &.readed:hover {
+    background-color: @gray-lighter;
+  }
+
+  .toread {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    color:#07a2f2;
+  }
+
+  .icon-circle {
+    height: 2.75rem;
+    width: 2.75rem;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: @white;
+
+    &.bg-contact {
+      background-color: #59ca0d;
+    }
+    &.bg-message {
+      background-color: #0d74ca;
+    }
+    &.bg-option {
+      background-color: #e4d41d;
+    }
+    &.bg-option-fail {
+      background-color: #bd200b;
+    }
+    &.bg-booked {
+      background-color: #129b0f;
+    }
+    &.bg-billed {
+      background-color: #10d4d6;
+    }
+    &.bg-addhome {
+      background-color: #ed9f08;
+    }
+    &.bg-refused {
+      background-color: #f00;
+    }
+    &.bg-check {
+      background-color: #129b0f;
+    }
+
+  }
+}
+
+
+
+// ################################################## EDIT
+.card {
+
+  &.edit {
+
+    .form-control {
+      font-size: @font-size-small;
+      border-radius: 10rem;
+      padding: 0.6rem 1rem;
+      width: 100%;
+    }
+    textarea.form-control {
+      border-radius: .25rem !important;
+    }
+
+    .dropdown {
+      a {
+        //position: absolute;
+        //top: 27%;
+        width: 100%;
+        color: #495057;
+        margin-top: -9px;
+        display: block;
+
+        &.dropdown-toggle {
+          &:after {
+            right: 1.5rem !important;
+          }
+        }
+      }
+      .dropdown-menu {
+        &.show {
+          width: 100%;
+        }
+
+        a {
+          &.dropdown-item {
+            margin-top: 0;
+            padding: .5rem 1rem;
+          }
+        }
+
+      }
+    }
+  }
+}
+#registrationForm .chosen-container-single .chosen-single {
+  border-radius: .5rem;
+}
+
+// ################################################## BTNs
+.btn {
+  &.btn-brand {
+    background-color: @brand;
+    color: @white;
+
+    &:hover {
+      background-color: @white;
+      border-color: @brand;
+      color: @brand;
+    }
+  }
+  &.btn-user {
+    font-size: .8rem;
+    border-radius: .5rem;
+    padding: .75rem 1rem;
+
+    &.btn-google {
+      color: @white;
+      background-color: #ea4335;
+      border-color: @white;
+
+      &:hover {
+        color: @white;
+        background-color: #e12717;
+        border-color: #e6e6e6;
+      }
+    }
+    &.btn-facebook {
+      color: @white;
+      background-color: #3b5998;
+      border-color: @white;
+
+      &:hover {
+        color: @white;
+        background-color: #30497c;
+        border-color: #e6e6e6;
+      }
+    }
+  }
+}
+
+
+// ################################################## GENERIC
+.etichetta {
+  background-color: #17a2b8;
+  color:@white;
+  padding: .25rem;
+  border-radius: .25rem;
+  display: inline-block;
+  margin-top: -15px;
+}
+
+a {
+  color:@brand;
+
+  &:hover,
+  &:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+}
+
+a[data-toggle="collapse"] {
+  position: relative;
+}
+
+.dropdown-toggle::after {
+  transform: translateY(-50%);
+  float: right;
+  margin-top: 10px;
+}
+
+.wrapper {
+  display: flex;
+  align-items: stretch;
+}
+
+// ################################################## TABLES
+.table {
+  td,
+  th {
+    vertical-align: middle !important;
+    font-size: @font-size-small;
+    background-color: @white;
+  }
+  th {
+    background-color: @gray-lighter;
+  }
+}
+
+// ################################################## TOPBAR
+#topbar {
+  .dropdown-list {
+    min-width: 500px;
+  }
+}
+
+// ################################################## SIDEBAR
+#sidebar {
+  min-width: 15rem;
+  max-width: 15rem;
+  min-height: 100vh;
+  background: @gray-lighter;
+  color: @gray-base;
+  transition: all 0.3s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 999;
+
+  .navbar-brand {
+    img {
+      max-width: 50px;
+    }
+  }
+
+  .dropdown-toggle::after {
+    float: right;
+    margin-top: 10px;
+    transform: translateY(-50%);
+  }
+
+  &.active {
+    margin-left: -250px;
+  }
+
+  .sidebar-heading {
+    padding: 0 1rem;
+    font-weight: 800;
+    font-size: .85rem;
+    color: rgba(@white, .4);
+  }
+
+  .navbar-nav {
+    .nav-item {
+
+      &.active {
+        > a,
+        a[aria-expanded="true"] {
+          color: @brand-d;
+          background: rgba(@white,.4);
+          font-weight: @font-weight-s;
+        }
+      }
+
+      .nav-link {
+        padding: 1rem;
+        display: block;
+        color: @brand;
+
+        &:hover {
+          color: @brand;
+          background: rgba(@white,.6);
+        }
+      }
+
+      ul {
+        .nav-item {
+          .nav-link {
+            padding: .5rem;
+            font-size: @font-size-small;
+            padding-left: 2rem;
+          }
+        }
+      }
+    }
+  }
+
+  ul {
+    .components {
+      padding: 20px 0;
+      border-bottom: 1px solid #47748b;
+    }
+    p {
+      color: @white;
+      padding: 10px;
+    }
+  }
+}
+
+
+
+// ################################################## FOOTER
+#footer {
+  position: fixed;
+  bottom: 0;
+  padding: 1.5rem 30px;
+  background: @white;
+  width: 100%;
+  z-index: 9999;
+}
+
+
+.featured-home,
+.featured-slider {
+  float: right;
+}
+
+.featured-home {
+  color:#ead30d
+}
+.featured-slider {
+  color:#ea9f0d
+}
+
+body > #content {
+  padding-bottom: 40px;
+}
+.listGalleria .delete-documento {
+  position: absolute;
+  right: 108px;
+  top: 5px;
+}
+.loading {
+  position: absolute;
+  height: 30px;
+  bottom: 4px;
+  right: 90px;
+  z-index: 999;
+  display: none;
+}
+
+.stripe {
+  &.success {
+    background-color: #bfd893;
+  }
+  &.warning {
+    background-color: #eb9642;
+  }
+}
+
+.dropdown-menu {
+  right: 0 !important;
+  left: unset !important;
+}
+
+
+@media (max-width: 768px) {
+  #sidebar {
+    margin-left: -250px;
+  }
+  #sidebar.active {
+    margin-left: 0;
+  }
+  #content {
+    width: 100%;
+  }
+  .login {
+    height: auto !important;
+  }
+}

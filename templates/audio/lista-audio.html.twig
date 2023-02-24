@@ -1,0 +1,217 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <main>
+        <article>
+                <header>
+                    <div class="container-fluid">
+                    <div class="row align-items-center mb-2">
+                        <div class="col-12 col-lg">
+                            <h2 class="position-relative">Brani in catalogo</h2>
+                        </div>
+                        <div class="col-12 col-lg text-lg-center">
+                            <h6 class="txt-brand">{{ listaAudio|length }} brani in catalogo</h6>
+                        </div>
+
+                            <div class="col-12 col-lg text-lg-end">
+                                <ul class="nav nav-pills float-start float-lg-end ms-lg-3 me-3 me-lg-0" id="pills-tab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link btn-brand active" id="pills-griglia-tab" data-bs-toggle="pill" data-bs-target="#pills-griglia" type="button" role="tab" aria-controls="pills-griglia" aria-selected="true">
+                                            <i class="fa-regular fa-table"></i>
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link btn-brand" id="pills-lista-tab" data-bs-toggle="pill" data-bs-target="#pills-lista" type="button" role="tab" aria-controls="pills-lista" aria-selected="false">
+                                            <i class="fa-solid fa-list"></i>
+                                        </button>
+                                    </li>
+                                </ul>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('schedaAudio', {'id' : 'new'}) }}" class="btn btn-brand">AGGIUNGI BRANO</a>
+                                {% endif %}
+                            </div>
+
+                    </div>
+                    </div>
+                </header>
+
+                {{ include('blocks/filters.html.twig') }}
+            <div class="container-fluid">
+                <div class="row mt-3">
+                    <div class="tab-content p-lg-0" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-griglia" role="tabpanel" aria-labelledby="pills-griglia-tab">
+
+                            <section id="video" class="mt-2">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        {% for item in listaAudio %}
+                                            {#}% if loop.index  <= 4 %#}
+                                            <div class="col-12 col-lg-3 mb-3 mb-lg-4">
+                                                <div class="card p-0 h-100 position-relative">
+                                                    {% if (statisticheUtenti[item.id] is defined) %}
+                                                        <span class="ascoltato" data-bs-toggle="tooltip" data-bs-title="Hai ascoltato questo brano">
+                                                    <span class="fa-stack fa-1x">
+                                                        <i class="fa-solid fa-circle fa-stack-2x"></i>
+                                                        <i class="fa-solid fa-head-side-headphones fa-stack-1x fa-inverse"></i>
+                                                    </span>
+                                                </span>
+                                                    {% endif %}
+                                                    {% if (statisticheUtentiRichieste[item.id] is defined) %}
+                                                        <span class="richiesto" data-bs-toggle="tooltip" data-bs-title="Hai chiesto info per questo brano">
+                                                    <span class="fa-stack fa-1x">
+                                                        <i class="fa-solid fa-circle fa-stack-2x"></i>
+                                                        <i class="fa-sharp fa-solid fa-watch fa-stack-1x fa-inverse"></i>
+                                                    </span>
+                                                </span>
+                                                    {% endif %}
+                                                    {% set toolt = "Info e ascolto" %}
+                                                    {% if is_granted('ROLE_ADMIN') %}
+                                                    {% set toolt = "Modifica il brano" %}
+                                                    {% endif %}
+                                                    <div class="overlay text-center d-flex flex-column justify-content-center align-items-center">
+                                                        <a href="{{ path('schedaAudio', {'id' : item.id}) }}" class="stretched-link" data-bs-toggle="tooltip" data-bs-title="{{ toolt }}">
+                                                            <i class="fa-solid fa-waveform fa-5x"></i>
+                                                            <h4 class="mt-3">{{ item.titolo }}</h4>
+                                                        </a>
+                                                    </div>
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item">
+                                                            <div class="d-flex w-100 justify-content-between">
+                                                                <h6 class="mb-0">
+                                                                    {% if (item.filmSerie == "F") %}
+                                                                        <i class="fa-solid fa-clapperboard"></i> Film
+                                                                    {% elseif (item.filmSerie == "S") %}
+                                                                        <i class="fa-solid fa-clapperboard"></i> Serie
+                                                                    {% endif %}
+                                                                </h6>
+                                                                <small class="text-muted">{{ item.dataCreazione|date("d F Y") }}</small>
+                                                            </div>
+                                                            <p class="mb-0">
+                                                                {{ item.filmSerieNome }}
+                                                            </p>
+
+                                                        </li>
+                                                        {% if(item.audioGenere|length) %}
+                                                            <li class="list-group-item">
+                                                                <h6 class="mb-0">Genere</h6>
+                                                                {% for i in item.audioGenere %}
+                                                                    <small class="badge bg-genere">{{ i.nome }}</small>
+                                                                {% endfor %}
+                                                            </li>
+                                                        {% endif %}
+                                                        {% if(item.audioFeeling|length) %}
+                                                            <li class="list-group-item">
+                                                                <h6 class="mb-0">Feeling</h6>
+                                                                {% for i in item.audioFeeling %}
+                                                                    <small class="badge bg-feeling">{{ i.nome }}</small>
+                                                                {% endfor %}
+                                                            </li>
+                                                        {% endif %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            {#% endif %#}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </section>
+
+                        </div>
+                        <div class="tab-pane fade" id="pills-lista" role="tabpanel" aria-labelledby="pills-lista-tab">
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-list mb-5">
+                                    <thead>
+                                    <tr>
+                                        <th class="d-none">Codice</th>
+                                        <th class=""> </th>
+                                        <th class="col-2">Titolo</th>
+                                        <th class="col-2 d-none">Autori</th>
+                                        <th class="col-2">Film</th>
+                                        <th>Durata</th>
+                                        <th class="col-1">Genere</th>
+                                        <th class="col-1">Feeling</th>
+                                        <th class="col-1">Strumenti</th>
+                                        <th>Editore</th>
+                                        <th>Produttore</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in listaAudio %}
+                                        <tr>
+                                            <td class="itemId d-none">{{ item.codice }}</td>
+                                            <td class="position-relative">
+                                                {% if (statisticheUtenti[item.id] is defined) %}
+                                                    <span class="ascoltato" data-bs-toggle="tooltip" data-bs-title="Hai ascoltato questo brano">
+                                                    <span class="fa-stack fa-1x">
+                                                        <i class="fa-solid fa-circle fa-stack-2x"></i>
+                                                        <i class="fa-solid fa-head-side-headphones fa-stack-1x fa-inverse"></i>
+                                                    </span>
+                                                </span>
+                                                {% endif %}
+                                                {% if (statisticheUtentiRichieste[item.id] is defined) %}
+                                                    <span class="richiesto" data-bs-toggle="tooltip" data-bs-title="Hai chiesto info per questo brano">
+                                                    <span class="fa-stack fa-1x">
+                                                        <i class="fa-solid fa-circle fa-stack-2x"></i>
+                                                        <i class="fa-sharp fa-solid fa-watch fa-stack-1x fa-inverse"></i>
+                                                    </span>
+                                                </span>
+                                                {% endif %}
+                                            </td>
+                                            <td><strong>{{ item.titolo }}</strong></td>
+                                            <td class=" d-none">{{ item.autori }}</td>
+                                            <td>
+                                                {{ item.filmSerieNome }}
+                                            </td>
+                                            <td>{{ item.durata }}</td>
+                                            <td>
+                                                {% for i in item.audioGenere %}
+                                                    <small class="badge bg-genere">{{ i.nome }}</small>
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                {% for i in item.audioFeeling %}
+                                                    <small class="badge bg-feeling">{{ i.nome }}</small>
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                {% for i in item.audioStrumenti %}
+                                                    <span class="badge bg-secondary">{{ i.nome }}</span>
+                                                {% endfor %}
+                                            </td>
+                                            <td>{{ item.editore }}</td>
+                                            <td>{{ item.produttore }}</td>
+
+                                            <td class="text-center">
+                                                {% if is_granted('ROLE_ADMIN') %}
+                                                    <a href="{{ path('schedaAudio', {'id' : item.id}) }}" data-toggle="tooltip" title="Modifica" class="btn btn-brand btn-sm" data-bs-original-title="Modifica" aria-label="Modifica"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                                    <a href="" data-nome="{{ item.titolo }}" data-sezione="audio" data-id="{{ item.id }}" class="btn btn-brand btn-sm" data-bs-toggle="modal" data-bs-target="#modalElimina"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                {% else %}
+                                                    <a href="{{ path('schedaAudio', {'id' : item.id}) }}" data-toggle="tooltip" title="Info e ascolto" class="btn btn-brand btn-sm" data-bs-original-title="Info e ascolto" aria-label="Info e ascolto"><i class="fa-solid fa-head-side-headphones"></i></a>
+                                                {% endif %}
+
+
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            </article>
+    </main>
+
+    {{ include('blocks/modal-delete.html.twig') }}
+
+
+{% endblock %}

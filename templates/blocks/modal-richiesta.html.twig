@@ -1,0 +1,21 @@
+<!-- Modal -->
+<div class="modal fade" id="modalRichiesta" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="eliminaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <form action="" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title">Richiesta info brano</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Vuoi avere più informazioni riguardo il brano <strong><span class="nomeElemento">{nome elemento}</span></strong>? <br>
+                    Invia la richiesta, il team EPMusic ti contatterà a questo indirizzo <strong class="userIdentifier">{{ app.user.userIdentifier }}</strong><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ANNULLA</button>
+                    <button type="submit" class="btn btn-success">INVIA</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

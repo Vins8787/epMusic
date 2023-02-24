@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+{{ include('blocks/head.html.twig') }}
+
+
+<body class="{{ app.request.attributes.get('_route') }}">
+
+
+    {% if (sidebarActive is defined) %}
+        {#{ include('blocks/sidebar.html.twig') }#}
+            {{ include('blocks/topbar.html.twig') }}
+        <div id="content">
+
+            {% block body %}{% endblock %}
+
+        </div>
+    {% else %}
+        {% block bodySmall %}{% endblock %}
+    {% endif %}
+
+    {{ include('blocks/toast.html.twig') }}
+    <script src="https://kit.fontawesome.com/d7657d11da.js" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

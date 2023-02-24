@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main>
+        <div class="container-fluid">
+            <article>
+            <div class="row align-items-center">
+                <div class="col-12 col-lg">
+                    {% if (genere.id is not defined or genere.id == "new") %}
+                        <h2>< genere nuovo ></h2>
+                    {% else %}
+                        <h2>{{ genere.nome }} | <small>{{ genere.codice }}</small></h2>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-lg text-lg-end">
+                    <a href="{{ path('listaGenere') }}"><i class="fa-light fa-angle-right"></i> Vai alla lista dei generi</a>
+                </div>
+            </div>
+
+            <form class="form-inline mb-0" role="search" action="" method="post">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12 col-lg-2 mb-3">
+                                <label>Codice *</label>
+                                <input type="text" class="form-control" name="codice" placeholder="Codice *" required value="{% if (genere.codice is defined) %}{{ genere.codice }}{% endif %}">
+                            </div>
+                            <div class="col-12 col-lg mb-3">
+                                <label>Nome *</label>
+                                <input type="text" class="form-control" name="nome" placeholder="Nome genere *" required value="{% if (genere.nome is defined) %}{{ genere.nome }}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12 col-lg">
+                                <button type="submit" class="btn btn-brand ms-auto" name="salva">SALVA</button>
+                            </div>
+                            <div class="col-12 col-lg text-lg-end">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </article>
+        </div>
+    </main>
+{% endblock %}

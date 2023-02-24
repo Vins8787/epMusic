@@ -1,0 +1,157 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {#{ include('blocks/filters.html.twig') }#}
+    <main>
+        <div class="container-fluid">
+            <article>
+
+            <div class="container-fluid text-end mb-2">
+                <a href="/"><i class="fa-light fa-angle-right"></i> Vai alla lista brani</a>
+            </div>
+
+            <section id="vista">
+                <div class="container-fluid">
+                    <div class="card shadow">
+                        <div class="card-body p-4">
+
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="overlay text-center d-flex flex-column justify-content-center align-items-center h-100" data-bs-toggle="tooltip" data-bs-title="Ascolta questo brano!">
+                                        <i class="fa-solid fa-waveform fa-5x mt-5"></i>
+                                        <h4 class="mt-3">{{ audio.titolo }}</h4>
+                                        <audio controls class="w-100 mt-auto">
+                                            <source src="{{ asset('audio/0112_release_state.mp3') }}" type="audio/ogg">
+                                            <source src="{{ asset('audio/0112_release_state.mp3') }}" type="audio/mpeg">
+                                            Your browser does not support the audio element.
+                                        </audio>
+                                    </div>
+                                </div>
+                                <div class="col-lg">
+                                    <div class="row align-items-center border-bottom mb-5">
+                                        <div class="col-12 col-lg-6">
+                                            <h2>{{ audio.titolo }}<small class="pull-right"> | Cod. {{ audio.codice }} | {% if (audio.rep is defined) %}Rep {{ audio.rep }}{% endif %}</small></h2>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-4">
+                                        <div class="col-12 col-lg">
+                                            {% if (audio.filmSerieNome is defined) %}
+                                                <h6 class="mb-0">
+                                                    {% if (audio.filmSerie == "F") %}
+                                                        Film
+                                                    {% elseif (audio.filmSerie == "S") %}
+                                                        Serie
+                                                    {% endif %}
+                                                </h6>
+                                                <i class="fa-solid fa-clapperboard"></i> {{ audio.filmSerieNome }}
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-12 col-lg">
+                                            {% if audio.audioGenere is defined %}
+                                                <h6 class="mb-0">Genere</h6>
+                                                {% for i in audio.audioGenere %}
+                                                    <small class="txt-genere">{{ i.nome }} | </small>
+                                                {% endfor %}
+                                            {%  endif %}
+                                        </div>
+                                        <div class="col-12 col-lg">
+                                            {% if audio.audioFeeling is defined %}
+                                                <h6 class="mb-0">Feeling</h6>
+                                                {% for i in audio.audioFeeling %}
+                                                    <small class="txt-feeling">{{ i.nome }} | </small>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-12 col-lg">
+                                            {% if audio.audioStrumenti is defined %}
+                                                <h6 class="mb-0">Strumenti</h6>
+                                                {% for i in audio.audioStrumenti %}
+                                                    <small>{{ i.nome }}</small>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-4">
+                                        <div class="col-12 col-lg">
+                                            <h6 class="mb-0">Durata</h6>
+                                            {% if (audio.durata is defined) %}{{ audio.durata }}{% endif %}
+                                        </div>
+                                        <div class="col-12 col-lg">
+                                            <h6 class="mb-0">Autore</h6>
+                                            {% if (audio.autori is defined) %}{{ audio.autori }}{% endif %}
+                                        </div>
+                                        <div class="col-12 col-lg">
+                                            <h6 class="mb-0">Editore</h6>
+                                            {% if (audio.editore is defined) %}{{ audio.editore }}{% endif %}
+                                        </div>
+                                        <div class="col-12 col-lg">
+                                            <h6 class="mb-0">Produttore</h6>
+                                            {% if (audio.produttore is defined) %}{{ audio.produttore }}{% endif %}
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="col-12 text-lg-end">
+                                <a href="" data-nome="{{ audio.titolo }}" data-emailUtente="" data-id="{{ audio.id }}" class="btn btn-brand ms-auto" data-bs-toggle="modal" data-bs-target="#modalRichiesta">RICHIEDI INFO SU QUESTO BRANO</a>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="card-body p-4">
+                            <div class="row align-items-center border-bottom mb-4">
+                                <div class="col-12 col-lg-6">
+                                    <h3>Richieste</h3>
+                                </div>
+                                <div class="col-12 col-lg-6 text-end">
+                                    <i class="fa-solid fa-circle-info "></i>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+
+                                {% if statisticheRichieste is defined and statisticheRichieste is not empty %}
+
+                                    <table class="table table-bordered table-list mb-5">
+                                        <thead>
+                                        <tr>
+                                            <th>Utente</th>
+                                            <th>Email</th>
+                                            <th>Data richiesta</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in statisticheRichieste %}
+                                            <tr>
+                                                <td class="itemId">{{ item.utente }}</td>
+                                                <td class="itemId"><a href="mailto:{{ item.email }}">{{ item.email }}</a></td>
+                                                <td class="dataRichiesta">{{ item.dataRichiesta }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <div class="alert alert-warning" role="alert">
+                                        Nessuna richiesta per questo brano.
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </article>
+        </div>
+    </main>
+
+    {{ include('blocks/modal-richiesta.html.twig') }}
+
+{% endblock %}

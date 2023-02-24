@@ -1,0 +1,33 @@
+<head>
+    <!-- Required meta tags -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% if (SEO_title is defined) %}{{ SEO_title }}{% endif %}{% endblock %} | EPMUSIC</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+
+    {% block stylesheets %}
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" media="all"></link>
+
+        <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+        <link href="{{ asset('css/component-chosen.css') }}" rel="stylesheet" media="all"></link>
+
+        <link href="{{ asset('css/custom.css') }}" rel="stylesheet" media="all"></link>
+    {% endblock %}
+
+    {% block javascripts %}
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.6/chosen.jquery.min.js"></script>
+
+        <script src="{{ asset('js/all.min.js') }}"></script>
+
+        <script src="{{ asset('js/scripts.js') }}"></script>
+    {% endblock %}
+
+</head>

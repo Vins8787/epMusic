@@ -1,0 +1,269 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main>
+        <div class="container-fluid">
+            <article>
+                <div class="row align-items-center">
+                    <div class="col-12 col-lg">
+                        {% if (audio.id is not defined or audio.id == "new") %}
+                            <h2>< brano nuovo ></h2>
+                        {% else %}
+                            <h2>{{ audio.titolo }}</small></h2>
+                        {% endif %}
+                    </div>
+                    <div class="col-12 col-lg text-lg-end">
+                        <a href="/"><i class="fa-light fa-angle-right"></i> Vai alla lista brani</a>
+                    </div>
+                </div>
+            <form class="form-inline mb-0" role="search" action="" method="post">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-lg-3">
+                                <h3>Ascolta il brano</h3>
+                                <div class="overlay text-center d-flex flex-column justify-content-center align-items-center" data-bs-toggle="tooltip" data-bs-title="Ascolta questo brano!">
+                                    <i class="fa-solid fa-waveform fa-5x mt-5"></i>
+                                    <h4 class="mt-3">{{ audio.titolo }}</h4>
+                                    <audio controls class="w-100 mt-auto">
+                                        <source src="{{ asset('audio/0112_release_state.mp3') }}" type="audio/ogg">
+                                        <source src="{{ asset('audio/0112_release_state.mp3') }}" type="audio/mpeg">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg">
+                                <div class="row align-items-center">
+                                    <div class="col-12 col-lg mb-3">
+                                        <label>Titolo *</label>
+                                        <input type="text" class="form-control" name="titolo" placeholder="Titolo *" required value="{% if (audio.titolo is defined) %}{{ audio.titolo }}{% endif %}">
+                                    </div>
+                                    <div class="col-12 col-lg-2 mb-3">
+                                        <label>Codice *</label>
+                                        <input type="text" class="form-control" name="codice" placeholder="Codice *" required value="{% if (audio.codice is defined) %}{{ audio.codice }}{% endif %}">
+                                    </div>
+                                    <div class="col-12 col-lg-2 mb-3">
+                                        <label>Rep *</label>
+                                        <input type="text" class="form-control" name="rep" placeholder="Rep *" required value="{% if (audio.rep is defined) %}{{ audio.rep }}{% endif %}">
+                                    </div>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col-12 col-lg mb-3">
+                                        <label>Autori *</label>
+                                        <input type="text" class="form-control" name="autori" placeholder="Autori *" required value="{% if (audio.autori is defined) %}{{ audio.autori }}{% endif %}">
+                                    </div>
+                                    <div class="col-12 col-lg-1 mb-3">
+                                        <label>Film/Serie *</label>
+                                        <select required class="form-control chosen" name="filmSerie" data-placeholder="Film/Serie *">
+                                            <option {% if (audio.filmSerie is defined and audio.filmSerie == "F" ) %} selected {% endif %} value="F">Film</option>
+                                            <option {% if (audio.filmSerie is defined and audio.filmSerie == "S" ) %} selected {% endif %} value="S">Serie</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-lg mb-3">
+                                        <label>Nome film/serie *</label>
+                                        <input type="text" class="form-control" name="filmSerieNome" placeholder="Nome film/serie *" required value="{% if (audio.filmSerieNome is defined) %}{{ audio.filmSerieNome }}{% endif %}">
+                                    </div>
+                                    <div class="col-12 col-lg-1 mb-3">
+                                        <label>Durata</label>
+                                        <input type="text" class="form-control" name="durata" placeholder="Durata" value="{% if (audio.durata is defined) %}{{ audio.durata }}{% endif %}">
+                                    </div>
+                                    <div class="col-12 col-lg-1 mb-3">
+                                        <label>Licenza *</label>
+                                        <select required class="form-control chosen" name="licenza" data-placeholder="Licenza *">
+                                            <option {% if (audio.licenza is defined and audio.licenza == 1 ) %} selected {% endif %} value="1">SI</option>
+                                            <option {% if (audio.licenza is defined and audio.licenza == 0 ) %} selected {% endif %} value="0">NO</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-lg-1 mb-3">
+                                        <label>SCF *</label>
+                                        <select required class="form-control chosen" name="scf" data-placeholder="SCF *">
+                                            <option {% if (audio.scf is defined and audio.scf == 1 ) %} selected {% endif %} value="1">SI</option>
+                                            <option {% if (audio.scf is defined and audio.scf == 0 ) %} selected {% endif %} value="0">NO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col-12 col-lg mb-3">
+                                        <label>Editore *</label>
+                                        <input type="text" class="form-control" name="editore" placeholder="Editore *" required value="{% if (audio.editore is defined) %}{{ audio.editore }}{% endif %}">
+                                    </div>
+                                    <div class="col-12 col-lg mb-3">
+                                        <label>Produttore *</label>
+                                        <input type="text" class="form-control" name="produttore" placeholder="Produttore *" required value="{% if (audio.produttore is defined) %}{{ audio.produttore }}{% endif %}">
+                                    </div>
+
+
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col-12 col-lg mb-3">
+                                        <label>Genere</label>
+                                        <select class="form-control chosen" name="audioGenere[]" data-placeholder="Genere" multiple>
+                                            {% for item in listaGenere %}
+                                                {% set seleziona = "" %}
+                                                {% if audio.audioGenere is defined %}
+                                                    {% for i in audio.audioGenere %}
+                                                        {% if i.id == item.id %}
+                                                            {% set seleziona = "selected" %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                                <option {{ seleziona }} value="{{ item.id }}">{{ item.codice }} - {{ item.nome }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-lg mb-3">
+                                        <label>Feeling</label>
+                                        <select class="form-control chosen" name="audioFeeling[]" data-placeholder="Feeling" multiple>
+                                            {% for item in listaFeeling %}
+                                                {% set seleziona = "" %}
+                                                {% if audio.audioFeeling is defined %}
+                                                    {% for i in audio.audioFeeling %}
+                                                        {% if i.id == item.id %}
+                                                            {% set seleziona = "selected" %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                                <option {{ seleziona }} value="{{ item.id }}">{{ item.codice }} - {{ item.nome }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-lg mb-3">
+                                        <label>Strumenti</label>
+                                        <select class="form-control chosen" name="audioStrumenti[]" data-placeholder="Strumenti" multiple>
+                                            {% for item in listaStrumenti %}
+                                                {% set seleziona = "" %}
+                                                {% if audio.audioStrumenti is defined %}
+                                                    {% for i in audio.audioStrumenti %}
+                                                        {% if i.id == item.id %}
+                                                            {% set seleziona = "selected" %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                                <option {{ seleziona }} value="{{ item.id }}">{{ item.codice }} - {{ item.nome }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col-12 col-lg mb-3">
+                                        <label>ISCR</label>
+                                        <input type="text" class="form-control" name="isrc" placeholder="ISCR" value="{% if (audio.isrc is defined) %}{{ audio.isrc }}{% endif %}">
+                                    </div>
+                                    <div class="col-12 col-lg mb-3">
+                                        <label>EAN</label>
+                                        <input type="text" class="form-control" name="ean" placeholder="EAN" value="{% if (audio.ean is defined) %}{{ audio.ean }}{% endif %}">
+                                    </div>
+                                    <div class="col-12 col-lg mb-3">
+                                        <label>Mastered</label>
+                                        <input type="text" class="form-control" name="mastered" placeholder="Mastered" value="{% if (audio.mastered is defined) %}{{ audio.mastered }}{% endif %}">
+                                    </div>
+                                    <div class="col-12 col-lg mb-3">
+                                        <label>Stem</label>
+                                        <input type="text" class="form-control" name="stem" placeholder="Stem" value="{% if (audio.stem is defined) %}{{ audio.stem }}{% endif %}">
+                                    </div>
+                                    <div class="col-12 col-lg-1 mb-3">
+                                        <label>Versioni</label>
+                                        <input type="number" step="1" class="form-control" name="versioni" placeholder="Versioni" value="{% if (audio.versioni is defined) %}{{ audio.versioni }}{% endif %}">
+                                    </div>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col-12 col-lg mb-3">
+                                        <label>Note</label>
+                                        <textarea name="note" rows="2" class="form-control" placeholder="Note">{% if (audio.note is defined) %}{{ audio.note }}{% endif %}</textarea>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center mt-3">
+                                    <div class="col-12 col-lg">
+                                        <button type="submit" class="btn btn-brand ms-auto" name="salva">SALVA</button>
+                                    </div>
+                                    <div class="col-12 col-lg text-lg-end">
+                                        {% if( audio.dataCreazione is defined) %}
+                                            <small class="text-muted">Caricato il {{ audio.dataCreazione|date("d F Y - H:i") }}</small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-body p-4">
+                        <div class="row align-items-center border-bottom mb-5">
+                            <div class="col-12 col-lg-6">
+                                <h3>Statistiche brano</h3>
+                            </div>
+                            <div class="col-12 col-lg-6 text-lg-end">
+                                {% if audio.id is defined %}<a href="{{ path('vistaStatisticheAudio', {'id' : audio.id}) }}">statistiche complete <i class="fa-solid fa-chart-pie"></i></a>{% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12 col-lg">
+                                <h5><strong>ASCOLTI</strong><br></h5>
+                                <ul class="list-group list-group-horizontal">
+                                    <li class="list-group-item flex-fill">
+                                        <h6>Totali</h6>
+                                        <h5>{{ statisticheAscolti.totali }}</h5>
+                                    </li>
+                                    <li class="list-group-item flex-fill">
+                                        <h6>Settimana</h6>
+                                        <h5>{{ statisticheAscolti.settimana }}</h5>
+                                    </li>
+                                    <li class="list-group-item flex-fill">
+                                        <h6>Mese</h6>
+                                        <h5>{{ statisticheAscolti.mese }}</h5>
+                                    </li>
+                                    <li class="list-group-item flex-fill">
+                                        <h6>Anno</h6>
+                                        <h5>{{ statisticheAscolti.anno }}</h5>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-body p-4">
+                        <div class="row align-items-center border-bottom mb-4">
+                            <div class="col-9 col-lg-6">
+                                <h3>Richieste</h3>
+                            </div>
+                            <div class="col col-lg-6 text-end">
+                                <i class="fa-solid fa-circle-info "></i>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+
+                            {% if statisticheRichieste is defined and statisticheRichieste is not empty %}
+
+                                <table class="table table-bordered table-list mb-5">
+                                    <thead>
+                                    <tr>
+                                        <th>Utente</th>
+                                        <th>Email</th>
+                                        <th>Data richiesta</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in statisticheRichieste %}
+                                            <tr>
+                                                <td class="itemId">{{ item.utente }}</td>
+                                                <td class="itemId"><a href="mailto:{{ item.email }}">{{ item.email }}</a></td>
+                                                <td class="dataRichiesta">{{ item.dataRichiesta }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <div class="alert alert-warning" role="alert">
+                                    Nessuna richiesta per questo brano.
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+            </article>
+        </div>
+    </main>
+{% endblock %}

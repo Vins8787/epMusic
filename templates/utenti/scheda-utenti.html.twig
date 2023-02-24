@@ -1,0 +1,180 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main>
+        <div class="container-fluid">
+        <article>
+            <div class="row align-items-center">
+                <div class="col-12 col-lg">
+                    {% if (utenti.id is not defined or utenti.id == "new") %}
+                        <h2>< utenti nuovo ></h2>
+                    {% else %}
+                        <h2>{{ utenti.nome }} | <small>{{ utenti.userIdentifier }}</small></h2>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-lg text-lg-end">
+                    <a href="{{ path('listaUtenti') }}"><i class="fa-light fa-angle-right"></i> Vai alla lista utenti</a>
+                </div>
+            </div>
+            <form class="form-inline mb-0" role="search" action="" method="post">
+                <div class="card shadow">
+                    <div class="card-body p-4">
+                        <div class="row align-items-center">
+                            <div class="col-12 col-lg mb-3">
+                                <label>Nome *</label>
+                                <input type="text" class="form-control" name="nome" placeholder="Nome *" required value="{% if (utenti.nome is defined) %}{{ utenti.nome }}{% endif %}">
+                            </div>
+                            <div class="col-12 col-lg mb-3">
+                                <label>Cognome *</label>
+                                <input type="text" class="form-control" name="cognome" placeholder="Cognome *" required value="{% if (utenti.cognome is defined) %}{{ utenti.cognome }}{% endif %}">
+                            </div>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <div class="col-12 col-lg mb-3">
+                                    <label>Gruppo *</label>
+                                    <select required class="form-control chosen" name="gruppo" data-placeholder="Gruppo *">
+                                        {% for item in listaGruppi %}
+                                            <option {% if (utenti.gruppo is defined and item.id == utenti.gruppo.id ) %} selected {% endif %} value="{{ item.id }}">{{ item.title }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-12 col-lg mb-3">
+                                <label>Email *</label>
+                                <input {% if (utenti.id is defined and utenti.id != "new")%} readonly {% endif %} type="text" class="form-control" name="userIdentifier" placeholder="Email *" required value="{% if (utenti.userIdentifier is defined) %}{{ utenti.userIdentifier }}{% endif %}">
+                            </div>
+                            <div class="col-12 col-lg mb-3">
+                                <label>Password {% if (utenti.id is not defined or utenti.id == "new")%} * {% endif %}</label>
+                                <input {% if (utenti.id is not defined or utenti.id == "new")%} required {% endif %} type="password" class="form-control" name="password" placeholder="Password" value="">
+                            </div>
+                            <div class="col-12 col-lg mb-3">
+                                <label>Ripeti password {% if (utenti.id is not defined or utenti.id == "new")%} * {% endif %}</label>
+                                <input {% if (utenti.id is not defined or utenti.id == "new")%} required {% endif %} type="password" class="form-control" name="ripetiPassword" placeholder="Ripeti password" value="">
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-12 col-lg mb-3">
+                                <label>Company *</label>
+                                <input type="text" class="form-control" name="company" placeholder="Company *" required value="{% if (utenti.company is defined) %}{{ utenti.company }}{% endif %}">
+                            </div>
+                            <div class="col-12 col-lg mb-3">
+                                <label>Ruolo *</label>
+                                <input type="text" class="form-control" name="ruolo" placeholder="Ruolo *" required value="{% if (utenti.ruolo is defined) %}{{ utenti.ruolo }}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12 col-lg mb-3">
+                                <button type="submit" class="btn btn-brand ms-auto" name="salva">SALVA</button>
+                                <!--button type="submit" class="btn btn-success ms-auto" name="salva">SALVA E INVITA</button-->
+                            </div>
+                            <div class="col-12 col-lg text-lg-end">
+                                {% if (utenti.dataCreazione is defined) %}
+                                    <span class="text-muted">Iscritto dal {{ utenti.dataCreazione|date("d/m/Y - H:i") }}</span>
+                                {% endif %}
+                                {% if (primoAccesso != "") %} |
+                                    <span class="text-muted">Primo accesso {{ primoAccesso.dataCreazione|date("d/m/Y - H:i") }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-body p-4">
+                        <div class="row align-items-center border-bottom mb-5">
+                            <div class="col-12 col-lg-6">
+                                <h3>Statistiche utente </h3>
+                            </div>
+                            <div class="col-12 col-lg-6 text-end">
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    {% if utenti.id is defined %}<a href="{{ path('vistaStatisticheUtenti', {'id' : utenti.id}) }}">statistiche complete <i class="fa-solid fa-chart-pie"></i></a>{% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-lg">
+                                <h5><strong>ACCESSI</strong><br></h5>
+                                <ul class="list-group list-group-horizontal">
+                                    <li class="list-group-item flex-fill">
+                                        <h6>Totali</h6>
+                                        <h5>{{ statisticheAccessi.totali }}</h5>
+                                    </li>
+                                    <li class="list-group-item flex-fill">
+                                        <h6>Settimana</h6>
+                                        <h5>{{ statisticheAccessi.settimana }}</h5>
+                                    </li>
+                                    <li class="list-group-item flex-fill">
+                                        <h6>Mese</h6>
+                                        <h5>{{ statisticheAccessi.mese }}</h5>
+                                    </li>
+                                    <li class="list-group-item flex-fill">
+                                        <h6>Anno</h6>
+                                        <h5>{{ statisticheAccessi.anno }}</h5>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-lg mt-3 mt-lg-0">
+                                <h5><strong>ASCOLTI</strong><br></h5>
+                                <ul class="list-group list-group-horizontal">
+                                    <li class="list-group-item flex-fill">
+                                        <h6>Totali</h6>
+                                        <h5>{{ statisticheAscolti.totali }}</h5>
+                                    </li>
+                                    <li class="list-group-item flex-fill">
+                                        <h6>Settimana</h6>
+                                        <h5>{{ statisticheAscolti.settimana }}</h5>
+                                    </li>
+                                    <li class="list-group-item flex-fill">
+                                        <h6>Mese</h6>
+                                        <h5>{{ statisticheAscolti.mese }}</h5>
+                                    </li>
+                                    <li class="list-group-item flex-fill">
+                                        <h6>Anno</h6>
+                                        <h5>{{ statisticheAscolti.anno }}</h5>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-body p-4">
+                        <div class="row align-items-center border-bottom mb-5">
+                            <div class="col-9 col-lg-6">
+                                <h3>Richieste</h3>
+                            </div>
+                            <div class="col col-lg-6 text-end">
+                                <i class="fa-solid fa-circle-info "></i>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            {% if richiesteUtente|length > 0 %}
+                                <table class="table table-bordered table-list mb-4">
+                                    <thead>
+                                    <tr>
+                                        <th>Brano</th>
+                                        <th>Data richiesta</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in richiesteUtente %}
+                                            <tr>
+                                                <td class="itemId">
+                                                    <a href="{{ path('schedaAudio', {'id' : item.idAudio}) }}" title="{{ richiesteUtenteBrani[item.idAudio].titolo }}" >{{ richiesteUtenteBrani[item.idAudio].titolo }}</a>
+                                                </td>
+                                                <td class="nome">{{ item.dataCreazione|date("d/m/Y - H:i") }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <div class="alert alert-warning" role="alert">
+                                    Nessun brano richiesto.
+                                </div>
+                            {% endif %}
+                        </div>
+                </div>
+                </div>
+            </form>
+        </article>
+        </div>
+    </main>
+{% endblock %}

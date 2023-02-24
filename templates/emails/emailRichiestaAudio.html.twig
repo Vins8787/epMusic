@@ -1,0 +1,32 @@
+{{ include('emails/blocks/header.html.twig') }}
+
+<table bgcolor="#ffffff" width="100%" border="0" cellspacing="0" cellpadding="30" align="center"
+       style="margin: auto"
+       class="tableContent">
+    <tr>
+        <td align="center" style="text-align: center;">
+            <h1>Richiesta Brano</h1>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" style="text-align: center;">
+            <p>
+                L'utente {{ utente.nome }}, ha richiesto maggiori informazioni per il brano <strong>{{ audio.titolo }}</strong>.
+            </p>
+            <p>
+                Contattalo all'indirizzo <strong>{{ utente.userIdentifier }}</strong><br>
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" style="text-align: center;">
+            <p>
+                Grazie,<br>
+                il team di <strong>{{ teamSite }}</strong>
+            </p>
+        </td>
+    </tr>
+
+</table>
+
+{{ include('emails/blocks/footer.html.twig') }}

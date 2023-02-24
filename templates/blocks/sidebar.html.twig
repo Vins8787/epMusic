@@ -1,0 +1,56 @@
+<nav id="sidebar" class="shadow">
+    <a class="navbar-brand d-flex align-items-center p-2" href="{{ path('listaAudio') }}">
+        <img src="{{ asset('img/mw-logo.png') }}" class="img-fluid p-2">
+        EPMUSIC
+    </a>
+
+    <ul class="navbar-nav sidebar componentss">
+
+        <li class="nav-item {% if (sidebarActive == "audio") %}active{% endif %}">
+            <a href="{{ path('listaAudio') }}" class="nav-link"><i class="fas fa-play"></i> Audio</a>
+        </li>
+
+
+        {% if is_granted('ROLE_ADMIN') %}
+
+
+            <li class="nav-item {% if (sidebarActive == "utenti") %}active{% endif %}">
+                <a href="{{ path('listaUtenti') }}" class="nav-link"><i class="fas fa-user"></i> Utenti</a>
+            </li>
+
+
+
+            <li class="nav-item {% if (sidebarActive == "statisticheAudio" or sidebarActive == "statisticheUtenti") %} active{% endif %}">
+                <a href="#statisticheSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fas fa-calendar-alt"></i> Statistiche</a></a>
+                <ul class="collapse list-unstyled {% if (sidebarActive == "statisticheAudio" or sidebarActive == "statisticheUtenti") %}show{% endif %}" id="statisticheSubmenu">
+                    <li class="nav-item {% if (sidebarActive == "statisticheAudio") %}active{% endif %}">
+                        <a href="{{ path('listaStatisticheAudio') }}" class="nav-link">Per brano</a>
+                    </li>
+                    <li class="nav-item {% if (sidebarActive == "statisticheUtenti") %}active{% endif %}">
+                        <a href="{{ path('listaStatisticheUtenti') }}" class="nav-link">Per utente</a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li class="nav-item {% if (sidebarActive == "genere" or sidebarActive == "feeling" or sidebarActive == "strumenti") %} active{% endif %}">
+                <a href="#impostazioniSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fas fa-cog"></i> Impostazioni</a></a>
+                <ul class="collapse list-unstyled {% if (sidebarActive == "genere" or sidebarActive == "feeling" or sidebarActive == "strumenti") %}show{% endif %}" id="impostazioniSubmenu">
+                    <li class="nav-item {% if (sidebarActive == "genere") %}active{% endif %}">
+                        <a href="{{ path('listaGenere') }}" class="nav-link">Genere</a>
+                    </li>
+                    <li class="nav-item {% if (sidebarActive == "feeling") %}active{% endif %}">
+                        <a href="{{ path('listaFeeling') }}" class="nav-link">Feeling</a>
+                    </li>
+                    <li class="nav-item {% if (sidebarActive == "strumenti") %}active{% endif %}">
+                        <a href="{{ path('listaStrumenti') }}" class="nav-link">Strumenti</a>
+                    </li>
+                </ul>
+            </li>
+        {% endif %}
+
+
+
+
+    </ul>
+</nav>

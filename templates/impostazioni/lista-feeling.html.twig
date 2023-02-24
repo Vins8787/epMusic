@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main>
+
+            <article>
+            <header>
+                <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-6 col-sm">
+                        <h2 class="position-relative">Feeling</h2>
+                    </div>
+                    <div class="col-6 col-sm text-end text-lg-center">
+                        <h6 class="txt-brand">{{ listaFeeling|length }} elementi</h6>
+                    </div>
+                    <div class="col-12 col-sm text-lg-end">
+                        <a href="{{ path('schedaFeeling', {'id' : 'new'}) }}" class="btn btn-brand">AGGIUNGI FEELING</a>
+                    </div>
+                </div>
+                </div>
+            </header>
+
+                <nav class="navbar navbar-expand-lg w-100">
+                    <button class="navbar-toggler ps-3" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse" aria-controls="filtersCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars"></i> Filtri
+                    </button>
+                    <div class="collapse navbar-collapse" id="filtersCollapse">
+                        <section id="filters" class="w-100">
+                    <div class="card card-body shadow">
+                    <form class="form-inline mb-0" role="search" method="get" action="">
+                        <div class="row align-items-center">
+                            <div class="col-12 col-lg mb-2">
+                                <input type="text" class="form-control textFilter" name="s" placeholder="Cerca..." value="{% if (filtri.s is defined) %}{{ filtri.s }}{% endif %}">
+                            </div>
+                            <div class="col-12 col-lg mb-2">
+                                <select class="form-control chosen ord" name="ord" data-placeholder="Ordina per...">
+                                    <option value="">Ordina per...</option>
+                                    <option {% if (filtri.ord is defined and filtri.ord == 'codiceAsc' ) %} selected {% endif %} value="codiceAsc">Codice --> ASC</option>
+                                    <option {% if (filtri.ord is defined and filtri.ord == 'codiceDesc' ) %} selected {% endif %} value="codiceDesc">Codice --> DESC</option>
+                                    <option {% if (filtri.ord is defined and filtri.ord == 'nomeAsc' ) %} selected {% endif %} value="nomeAsc">Nome --> ASC</option>
+                                    <option {% if (filtri.ord is defined and filtri.ord == 'nomeDesc' ) %} selected {% endif %} value="nomeDesc">Nome --> DESC</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-lg mb-2">
+                                <button type="submit" class="btn btn-sm btn-brand ms-auto">Cerca</button>
+                                {% if (filtri|length > 0) %}
+                                    <a href="{{ path('listaFeeling') }}" class="ms-2">annulla</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                </section>
+                    </div>
+                </nav>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-list mb-5">
+                    <thead>
+                    <tr>
+                        <th>Codice</th>
+                        <th>Nome</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in listaFeeling %}
+                            <tr>
+                                <td class="itemId">{{ item.codice }}</td>
+                                <td class="nome">{{ item.nome }}</td>
+
+                                <td class="text-center">
+                                    <a href="{{ path('schedaFeeling', {'id' : item.id}) }}" data-toggle="tooltip" title="Modifica" class="btn btn-brand btn-sm" data-bs-original-title="Modifica" aria-label="Modifica"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+
+                                    <span data-toggle="tooltip" title="Elimina" class="pt-2" data-bs-original-title="Elimina">
+                                    <a href="" data-nome="{{ item.nome }}" data-sezione="feeling" data-id="{{ item.id }}" class="btn btn-brand btn-sm" data-bs-toggle="modal" data-bs-target="#modalElimina"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                </span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </article>
+
+    </main>
+
+    {{ include('blocks/modal-delete.html.twig') }}
+
+
+{% endblock %}

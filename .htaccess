@@ -1,0 +1,18 @@
+RewriteEngine on
+
+Header set Access-Control-Allow-Origin *
+Header set Access-Control-Allow-Headers: "Origin, X-Requested-With, Content-Type, Accept, Authorization, responseType"
+Header always set Access-Control-Allow-Methods "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+
+RewriteCond %{HTTP_HOST} ^epmusic.mister-wolf.it$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^epmusic.mister-wolf.it$
+RewriteCond %{REQUEST_URI} !public/
+RewriteRule (.*) /public/$1 [L]
+
+
+# DISABLE CACHING
+<IfModule mod_headers.c>
+Header set Cache-Control "no-cache, no-store, must-revalidate"
+Header set Pragma "no-cache"
+Header set Expires 0
+</IfModule>

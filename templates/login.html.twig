@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% block bodySmall %}
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-11 col-lg-6">
+                <div class="card mt-5 mt-lg-0">
+                    <div class="row g-0">
+                        <div class="col-12 col-lg-5 text-center d-flex justify-content-center align-items-center pt-4 pb-4 pt-lg-0 pb-lg-0">
+                            <img src="{{ asset('img/ep-logo-b.png') }}" class="w-50 login-logo">
+                        </div>
+                        <div class="col-12 col-lg white">
+                            <div class="card-body p-lg-5">
+                                <i class="fa-solid fa-waveform fa-beat"></i>
+                                <h1 class="h4 mt-2 mb-4">Benvenuto su Eeagle Pictures MUSIC! </h1>
+                                <form action="" class="user" method="POST">
+
+                                    {% for flash_message in app.session.flashBag.get('noticeLogin') %}
+                                        <div class="flash-notice">
+                                            <div class="text-danger">
+                                                {{ flash_message|raw  }}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    {% for flash_message in app.session.flashBag.get('successLogin') %}
+                                        <div class="flash-notice mb-2">
+                                            <div class="text-success">
+                                                {{ flash_message|raw  }}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+
+
+                                    <div class="form-group mb-2 mb-lg-4">
+                                        <input type="text" class="form-control" id="_username" name="_username" aria-describedby="emailHelp" placeholder="Email/Username" required>
+                                    </div>
+                                    <div class="form-group mb-2 mb-lg-4">
+                                        <input type="password" class="form-control" id="_password" name="_password" value="" placeholder="Password" required>
+                                    </div>
+
+                                    <button class="btn btn-brand btn-user btn-block">Login</button>
+                                </form>
+                                <hr>
+                                <a class="small"  href="{{ path('recuperaPassword') }}">Hai dimenticato la Password?</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
