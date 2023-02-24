@@ -1,0 +1,22 @@
+From e00f5320b14ddb5d22555e51d38d3b1a687310fe Mon Sep 17 00:00:00 2001
+From: Vincenzo <naps8787@gmail.com>
+Date: Sun, 11 Feb 2024 10:18:27 +0100
+Subject: [PATCH] prova 1
+
+---
+ .env | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/.env b/.env
+index 19d0fa3..3025473 100644
+--- a/.env
++++ b/.env
+@@ -33,3 +33,4 @@ MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=0
+ # Gmail SHOULD NOT be used on production, use it in development only.
+ MAILER_DSN=gmail+smtp://misterwolfaq:qvkmfscytzmrfvia@default
+ ###< symfony/google-mailer ###
++seee
+\ No newline at end of file
+-- 
+2.33.0.windows.2
+
