@@ -55,8 +55,6 @@ class AudioController extends AbstractController {
             }
         }
 
-
-
         $statisticheUtentiRichieste =  $em->getRepository(Log::class)->findBy(["idUtente" => $user->getId(), "tipo" => "richiesta-audio"]);
         $statisticheUtentiRichiesteArray = [];
         if ($statisticheUtentiRichieste != null) {
